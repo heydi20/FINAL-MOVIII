@@ -1,30 +1,10 @@
+import 'package:flixly/screens/ReproduccionScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Crea esta clase si no la tienes
-class VideoPlayerScreen extends StatelessWidget {
-  final String videoId;
-  
-  const VideoPlayerScreen({super.key, required this.videoId});
-  
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Reproduciendo Video'),
-        backgroundColor: Colors.black,
-      ),
-      body: Center(
-        child: Text(
-          'Aquí iría el reproductor para: $videoId',
-          style: const TextStyle(color: Colors.white),
-        ),
-      ),
-      backgroundColor: Colors.black,
-    );
-  }
-}
+
 
 class CategoriasScreen extends StatefulWidget {
   final int edad;
@@ -425,7 +405,7 @@ class _CategoriasScreenState extends State<CategoriasScreen>
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const VideoPlayerScreen(
+                    builder: (context) =>  VideoPlayerScreen(
                       videoId: 'dQw4w9WgXcQ', // Video por defecto
                     ),
                   ),
