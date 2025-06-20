@@ -1,6 +1,5 @@
 import 'package:flixly/screens/CategoriasScreen.dart';
 import 'package:flutter/material.dart';
-
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Login extends StatefulWidget {
@@ -180,18 +179,13 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
             width: 1,
           ),
         ),
-        
       ),
     );
   }
 
-
-
   Widget _buildHeader() {
     return Column(
       children: [
-       
-        
         // Título con animación shimmer
         AnimatedBuilder(
           animation: _shimmerAnimation,
@@ -404,7 +398,6 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
         },
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
-
           prefixIcon: Icon(Icons.lock_rounded, color: _secondaryPurple, size: 24),
           suffixIcon: IconButton(
             icon: Icon(
@@ -423,136 +416,143 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
     );
   }
 
-Widget _buildRememberAndForgot() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Expanded(
-        child: Row(
-          children: [
-            Checkbox(
-              value: _rememberMe,
-              activeColor: _primaryPurple,
-              onChanged: (value) {
-                setState(() {
-                  _rememberMe = value ?? false;
-                });
-              },
-            ),
-            Flexible(
-              child: Text(
-                "Recordarme",
-                style: TextStyle(
-                  color: Colors.grey[300],
-                  fontSize: 14,
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
-        ),
-      ),
-      TextButton(
-        onPressed: () {
-          // Acción para recuperar contraseña
-        },
-        child: Text(
-          "¿Olvidaste tu contraseña?",
-          style: TextStyle(
-            color: _accentColor,
-            fontSize: 14,
-          ),
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
-    ],
-  );
-}
-
-
-  Widget _buildLoginButton(Size size) {
-    return ScaleTransition(
-      scale: _scaleAnimation,
-      child: Container(
-        width: size.width,
-        height: 65,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [_primaryPurple, _secondaryPurple, _accentColor],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-          ),
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: _primaryPurple.withOpacity(0.5),
-              blurRadius: 25,
-              spreadRadius: 3,
-              offset: const Offset(0, 10),
-            ),
-            BoxShadow(
-              color: _accentColor.withOpacity(0.3),
-              blurRadius: 35,
-              spreadRadius: 8,
-              offset: const Offset(0, 15),
-            ),
-          ],
-        ),
-        child: ElevatedButton(
-          onPressed: _isLoading
-              ? null
-              : () async {
-                  await _animController.forward();
-                  await _animController.reverse();
-                  _handleLogin();
+  Widget _buildRememberAndForgot() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Row(
+            children: [
+              Checkbox(
+                value: _rememberMe,
+                activeColor: _primaryPurple,
+                onChanged: (value) {
+                  setState(() {
+                    _rememberMe = value ?? false;
+                  });
                 },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.transparent,
-            shadowColor: Colors.transparent,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
+              ),
+              Flexible(
+                child: Text(
+                  "Recordarme",
+                  style: TextStyle(
+                    color: Colors.grey[300],
+                    fontSize: 14,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
           ),
-          child: _isLoading
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    CircularProgressIndicator(
+        ),
+        TextButton(
+          onPressed: _showForgotPasswordDialog,
+          child: Text(
+            "¿Olvidaste tu contraseña?",
+            style: TextStyle(
+              color: _accentColor,
+              fontSize: 14,
+            ),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
+    );
+  }
+
+ Widget _buildLoginButton(Size size) {
+  return ScaleTransition(
+    scale: _scaleAnimation,
+    child: Container(
+      width: size.width,
+      height: 65,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [_primaryPurple, _secondaryPurple, _accentColor],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: _primaryPurple.withOpacity(0.5),
+            blurRadius: 25,
+            spreadRadius: 3,
+            offset: const Offset(0, 10),
+          ),
+          BoxShadow(
+            color: _accentColor.withOpacity(0.3),
+            blurRadius: 35,
+            spreadRadius: 8,
+            offset: const Offset(0, 15),
+          ),
+        ],
+      ),
+      child: ElevatedButton(
+        onPressed: _isLoading
+            ? null
+            : () async {
+                await _animController.forward();
+                await _animController.reverse();
+                _handleLogin();
+              },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        child: _isLoading
+            ? const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
                       color: Colors.white,
-                      strokeWidth: 3,
+                      strokeWidth: 2,
                     ),
-                    SizedBox(width: 15),
-                    Text(
-                      "Ingresando a tu cine...",
+                  ),
+                  SizedBox(width: 12),
+                  Flexible(
+                    child: Text(
+                      "Ingresando...",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ],
-                )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.login_rounded, color: Colors.white, size: 28),
-                    SizedBox(width: 12),
-                    Text(
-                      "¡ENTRAR A MI CINE!",
+                  ),
+                ],
+              )
+            : const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.login_rounded, color: Colors.white, size: 24),
+                  SizedBox(width: 8),
+                  Flexible(
+                    child: Text(
+                      "ENTRAR A MI CINE",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        letterSpacing: 1.0,
+                        letterSpacing: 0.5,
                       ),
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
                     ),
-                  ],
-                ),
-        ),
+                  ),
+                ],
+              ),
       ),
-    );
-  }
-
+    ),
+  );
+}
   Widget _buildDivider() {
     return Row(
       children: [
@@ -655,13 +655,68 @@ Widget _buildRememberAndForgot() {
     );
   }
 
+  // FUNCIÓN DE LOGIN DENTRO DE LA CLASE
+  Future<void> _login(String correo, String contrasenia) async {
+    if (correo.isEmpty || contrasenia.isEmpty) {
+      _showCustomSnackBar('Por favor completa todos los campos', isError: true);
+      return;
+    }
+
+    final supabase = Supabase.instance.client;
+
+    try {
+      final AuthResponse res = await supabase.auth.signInWithPassword(
+        email: correo,
+        password: contrasenia,
+      );
+
+      final User? user = res.user;
+
+      if (user != null && mounted) {
+        _showCustomSnackBar('¡Bienvenid@ de vuelta a tu cine personal! 🎬', isError: false);
+
+        int edad = 25; 
+        List<String> generosFavoritos = ['Acción', 'Comedia']; 
+
+        await Future.delayed(const Duration(seconds: 2));
+
+        if (mounted) {
+          Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) => CategoriasScreen(
+                edad: edad,
+                generosFavoritos: generosFavoritos,
+              ),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                return FadeTransition(opacity: animation, child: child);
+              },
+            ),
+          );
+        }
+      } else {
+        _showCustomSnackBar('Error: No se pudo iniciar sesión', isError: true);
+      }
+    } catch (e) {
+      String errorMessage = 'Error al iniciar sesión';
+
+      if (e.toString().contains('Invalid login credentials')) {
+        errorMessage = 'Credenciales incorrectas. Verifica tu correo y contraseña.';
+      } else if (e.toString().contains('Email not confirmed')) {
+        errorMessage = 'Por favor confirma tu correo electrónico.';
+      }
+
+      _showCustomSnackBar(errorMessage, isError: true);
+    }
+  }
+
   void _handleLogin() async {
     if (!_formKey.currentState!.validate()) return;
     
     setState(() => _isLoading = true);
     
     try {
-      await login(_correo.text, _contrasenia.text, context);
+      await _login(_correo.text, _contrasenia.text);
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -677,7 +732,7 @@ Widget _buildRememberAndForgot() {
           children: [
             Icon(Icons.help_outline_rounded, color: _primaryPurple, size: 28),
             const SizedBox(width: 12),
-            Text(
+            const Text(
               'Recuperar Contraseña',
               style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
             ),
@@ -706,96 +761,40 @@ Widget _buildRememberAndForgot() {
       ),
     );
   }
-}
 
-Future<void> login(String correo, String contrasenia, BuildContext context) async {
-  if (correo.isEmpty || contrasenia.isEmpty) {
-    _showCustomSnackBar(context, 'Por favor completa todos los campos', isError: true);
-    return;
-  }
-
-  final supabase = Supabase.instance.client;
-
-  try {
-    final AuthResponse res = await supabase.auth.signInWithPassword(
-      email: correo,
-      password: contrasenia,
-    );
-
-    final User? user = res.user;
-
-    if (user != null) {
-      _showCustomSnackBar(context, '¡Bienvenid@ de vuelta a tu cine personal! 🎬', isError: false);
-
-     
-      int edad = 25; 
-      List<String> generosFavoritos = ['Acción', 'Comedia']; 
-
-      await Future.delayed(const Duration(seconds: 2));
-
-  
-      Navigator.pushReplacement(
-        context,
-        PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => CategoriasScreen(
-            edad: edad,
-            generosFavoritos: generosFavoritos,
-          ),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeTransition(opacity: animation, child: child);
-          },
+  // FUNCIÓN SNACKBAR DENTRO DE LA CLASE
+  void _showCustomSnackBar(String message, {required bool isError}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: isError ? Colors.red.withOpacity(0.2) : Colors.green.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Icon(
+                isError ? Icons.movie_filter : Icons.movie_creation_outlined,
+                color: Colors.white,
+                size: 20,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                message,
+                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+              ),
+            ),
+          ],
         ),
-      );
-    } else {
-      _showCustomSnackBar(context, 'Error: No se pudo iniciar sesión', isError: true);
-    }
-
-
-    
-  } catch (e) {
-    String errorMessage = 'Error al iniciar sesión';
-
-    if (e.toString().contains('Invalid login credentials')) {
-      errorMessage = 'Credenciales incorrectas. Verifica tu correo y contraseña.';
-    } else if (e.toString().contains('Email not confirmed')) {
-      errorMessage = 'Por favor confirma tu correo electrónico.';
-    }
-
-    _showCustomSnackBar(context, errorMessage, isError: true);
-  }
-}
-
-void _showCustomSnackBar(BuildContext context, String message, {required bool isError}) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: isError ? Colors.red.withOpacity(0.2) : Colors.green.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(
-              isError ? Icons.movie_filter : Icons.movie_creation_outlined,
-              color: Colors.white,
-              size: 20,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              message,
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-            ),
-          ),
-        ],
+        backgroundColor: isError ? Colors.red.shade700 : const Color(0xFF6C63FF),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        margin: const EdgeInsets.all(16),
+        duration: const Duration(seconds: 4),
       ),
-      backgroundColor: isError ? Colors.red.shade700 : const Color(0xFF6C63FF),
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      margin: const EdgeInsets.all(16),
-      duration: const Duration(seconds: 4),
-    ),
-  );
+    );
+  }
 }
