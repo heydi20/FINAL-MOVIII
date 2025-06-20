@@ -759,7 +759,12 @@ class _CategoriasScreenState extends State<CategoriasScreen>
                     ),
                     onPressed: () {
                       Navigator.of(context).pop();
-                      _controller.load(pelicula['trailerId']);
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              VideoPlayerScreen(videoId: pelicula['trailerId']),
+                        ),
+                      );
                     },
                     child: const Text(
                       "VER TRAILER",
@@ -787,7 +792,13 @@ class _CategoriasScreenState extends State<CategoriasScreen>
                     ),
                     onPressed: () {
                       Navigator.of(context).pop();
-                      _controller.load(pelicula['peliculaId']);
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => VideoPlayerScreen(
+                            videoId: pelicula['peliculaId'],
+                          ),
+                        ),
+                      );
                     },
                     child: const Text(
                       "VER PELÍCULA",
